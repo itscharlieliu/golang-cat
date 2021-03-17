@@ -1,11 +1,11 @@
-package main
+package pkg
 
 import (
 	"io/ioutil"
 	"os"
 )
 
-func getStdout(callback func()) string {
+func GetStdout(callback func()) string {
 	stdout := os.Stdout // Keep backup of real stdout
 	reader, writer, _ := os.Pipe()
 	os.Stdout = writer // Set stdout to our writer that we just created
