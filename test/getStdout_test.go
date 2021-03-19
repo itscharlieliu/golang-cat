@@ -1,8 +1,10 @@
-package main
+package test
 
 import (
 	"fmt"
 	"testing"
+
+	"github.com/itscharlieliu/golang-cat/pkg"
 )
 
 func testFunc(str string) {
@@ -10,9 +12,9 @@ func testFunc(str string) {
 }
 
 func TestGetStdout(t *testing.T) {
-	result := getStdout(func() { testFunc("hello world") })
+	result := pkg.GetStdout(func() { testFunc("hello world") })
 
 	if result != "hello world" {
-		t.Errorf("Expected %s, got %s", "test", result)
+		t.Errorf("Expected %s, got %s", "hello world", result)
 	}
 }
