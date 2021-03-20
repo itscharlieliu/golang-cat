@@ -8,7 +8,8 @@ import (
 
 func TestCatNoArgs(t *testing.T) {
 
-	commandOutputString := pkg.GetStdout(func() { pkg.ReadFile("test.txt") })
+	// commandOutputString := pkg.GetStdout(func() { pkg.ReadFile("test.txt") })
+	commandOutputString := pkg.RunCmd("go", []string{"run", "../cmd/cat.go", "test.txt"})
 
 	realOutputString := pkg.RunCmd("cat", []string{"test.txt"})
 
@@ -17,29 +18,14 @@ func TestCatNoArgs(t *testing.T) {
 	}
 }
 
-// func TestCatMultipleFiles(t *testing.T) {
+func TestCatMultipleFiles(t *testing.T) {
 
-// 	commandOutputString := pkg.GetStdout(func() { pkg.ReadFile("test.txt") })
+	// commandOutputString := pkg.GetStdout(func() { pkg.ReadFile("test.txt") })
+	commandOutputString := pkg.RunCmd("go", []string{"run", "../cmd/cat.go", "test.txt", "test2.txt"})
 
-// 	exe, _ := exec.LookPath("cat")
+	realOutputString := pkg.RunCmd("cat", []string{"test.txt", "test2.txt"})
 
-// 	reader, writer, _ := os.Pipe()
-
-// 	cmd := &exec.Cmd{
-// 		Path:   exe,
-// 		Args:   []string{exe, "test.txt"},
-// 		Stdout: writer,
-// 		Stderr: writer,
-// 	}
-
-// 	cmd.Run()
-
-// 	writer.Close()
-// 	output, _ := ioutil.ReadAll(reader)
-
-// 	realOutputString := string(output)
-
-// 	if commandOutputString != realOutputString {
-// 		t.Errorf("Expected %s, got %s", realOutputString, commandOutputString)
-// 	}
-// }
+	if commandOutputString != realOutputString {
+		t.Errorf("Expected %s, got %s", realOutputString, commandOutputString)
+	}
+}
