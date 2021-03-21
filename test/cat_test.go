@@ -29,3 +29,15 @@ func TestCatMultipleFiles(t *testing.T) {
 		t.Errorf("Expected %s, got %s", realOutputString, commandOutputString)
 	}
 }
+
+func TestCatLineNumbers(t *testing.T) {
+
+	// commandOutputString := pkg.GetStdout(func() { pkg.ReadFile("test.txt") })
+	commandOutputString := pkg.RunCmd("go", []string{"run", "../cmd/cat.go", "-n", "test.txt"})
+
+	realOutputString := pkg.RunCmd("cat", []string{"-n", "test.txt"})
+
+	if commandOutputString != realOutputString {
+		t.Errorf("Expected %s, got %s", realOutputString, commandOutputString)
+	}
+}
