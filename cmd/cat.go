@@ -1,17 +1,21 @@
 package main
 
 import (
-	"os"
+	"flag"
 
 	"github.com/itscharlieliu/golang-cat/pkg"
 )
 
 func main() {
 
-	args := os.Args[1:]
+	showLineNumPtr := flag.Bool("n", false, "show line numbers")
+
+	flag.Parse()
+
+	args := flag.Args()
 
 	for i := 0; i < len(args); i++ {
-		pkg.ReadFile(args[i])
+		pkg.ReadFile(args[i], *showLineNumPtr)
 	}
 
 }
