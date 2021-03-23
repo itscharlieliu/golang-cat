@@ -19,17 +19,21 @@ func ReadFile(filename string, showLineNumbers bool) {
 	check(err)
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
+	reader := bufio.NewReader(file)
 
-	for i := 0; scanner.Scan(); i++ {
+	for i := 0; ; i++ {
+		line, err := reader.ReadString('\n')
+
 		if showLineNumbers {
-			fmt.Printf("%d	", i+1)
+			fmt.Printf("     %d	", i+1)
 		}
-		fmt.Println(scanner.Text())
-	}
+		fmt.Print(line)
 
-	err = scanner.Err()
-	check(err)
+		if err != nil {
+			// Either there was an error or we reached EOF
+			break
+		}
+	}
 
 	// for {
 	// 	// Create bytes slice of size 8

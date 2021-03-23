@@ -38,6 +38,6 @@ func TestCatLineNumbers(t *testing.T) {
 	realOutputString := pkg.RunCmd("cat", []string{"-n", "test.txt"})
 
 	if commandOutputString != realOutputString {
-		t.Errorf("Expected %s, got %s", realOutputString, commandOutputString)
+		t.Errorf("Expected: \n%s\nGot \n%s\n", realOutputString, commandOutputString)
 	}
 }
