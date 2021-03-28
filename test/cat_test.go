@@ -28,26 +28,13 @@ func TestCatMultipleFiles(t *testing.T) {
 	}
 }
 
-func TestCatLineNumbers(t *testing.T) {
+func TestCatSuppressEmptyLines(t *testing.T) {
 
-	commandOutputString := pkg.RunCmd("go", []string{"run", "../cmd/cat.go", "-n", "test.txt"})
+	commandOutputString := pkg.RunCmd("go", []string{"run", "../cmd/cat.go", "-s", "test.txt"})
 
-	realOutputString := pkg.RunCmd("cat", []string{"-n", "test.txt"})
+	realOutputString := pkg.RunCmd("cat", []string{"-s", "test.txt"})
 
 	if commandOutputString != realOutputString {
 		t.Errorf("Expected: \n%s\nGot \n%s\n", realOutputString, commandOutputString)
-	}
-}
-
-func TestCatCreateNewFile(t *testing.T) {
-	pkg.RunCmd("go", []string{"run", "../cmd/cat.go", "test.txt", ">", "newfile.txt"})
-
-	pkg.RunCmd("cat", []string{"test.txt", ">", "newfile2.txt"})
-
-	text1 := pkg.RunCmd("cat", []string{"newfile.txt"})
-	text2 := pkg.RunCmd("cat", []string{"newfile2.txt"})
-
-	if text1 != text2 {
-		t.Errorf("Expected: \n%s\nGot \n%s\n", text2, text1)
 	}
 }
