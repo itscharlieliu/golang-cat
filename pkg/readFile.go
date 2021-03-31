@@ -14,7 +14,14 @@ func check(e error) {
 
 const SLICE_SIZE = 8
 
-func ReadFile(filename string, showLineNumbers bool, hideEmptyLines bool) {
+func writeFlag(write bool) string {
+	if write {
+		return "$"
+	}
+	return ""
+}
+
+func ReadFile(filename string, showLineNumbers bool, hideEmptyLines bool, highlightEndOfString bool) {
 	file, err := os.Open(filename)
 	check(err)
 	defer file.Close()
@@ -37,7 +44,8 @@ func ReadFile(filename string, showLineNumbers bool, hideEmptyLines bool) {
 		if showLineNumbers {
 			fmt.Printf("     %d	", i+1)
 		}
-		fmt.Print(line)
+
+		fmt.Print(line + writeFlag(highlightEndOfString))
 
 		if err != nil {
 			// Either there was an error or we reached EOF
