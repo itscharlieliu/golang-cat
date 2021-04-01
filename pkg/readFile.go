@@ -28,8 +28,15 @@ func ReadFile(filename string, showLineNumbers bool, hideEmptyLines bool, highli
 
 	reader := bufio.NewReader(file)
 
-	for i, emptyLines := 0, 0; ; i++ {
+	continueReading := true
+
+	for i, emptyLines := 0, 0; continueReading; i++ {
 		line, err := reader.ReadString('\n')
+
+		if err != nil {
+			// Either there was an error or we reached EOF
+			continueReading = false
+		}
 
 		if line == "\n" {
 			emptyLines++
@@ -45,11 +52,13 @@ func ReadFile(filename string, showLineNumbers bool, hideEmptyLines bool, highli
 			fmt.Printf("     %d	", i+1)
 		}
 
-		fmt.Print(line + writeFlag(highlightEndOfString))
-
-		if err != nil {
-			// Either there was an error or we reached EOF
-			break
+		lineSize := len(line)
+		if lineSize > 0 && line[lineSize-1] == '\n' {
+			if lineSize == 1 {
+				print(writeFlag(highlightEndOfString) + "\n")
+				continue
+			}
+			fmt.Print(line[:lineSize-2] + writeFlag(highlightEndOfString) + string(line[lineSize-1]))
 		}
 	}
 }
