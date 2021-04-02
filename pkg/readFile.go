@@ -44,7 +44,7 @@ func ReadFile(filename string, showLineNumbers bool, hideEmptyLines bool, highli
 			emptyLines = 0
 		}
 
-		if emptyLines > 1 {
+		if hideEmptyLines && emptyLines > 1 {
 			continue
 		}
 
@@ -53,12 +53,17 @@ func ReadFile(filename string, showLineNumbers bool, hideEmptyLines bool, highli
 		}
 
 		lineSize := len(line)
-		if lineSize > 0 && line[lineSize-1] == '\n' {
+
+		if highlightEndOfString && lineSize > 0 && line[lineSize-1] == '\n' {
 			if lineSize == 1 {
-				print(writeFlag(highlightEndOfString) + "\n")
+				fmt.Print(writeFlag(highlightEndOfString) + "\n")
 				continue
 			}
-			fmt.Print(line[:lineSize-2] + writeFlag(highlightEndOfString) + string(line[lineSize-1]))
+
+			fmt.Print(line[:lineSize-1] + writeFlag(highlightEndOfString) + string(line[lineSize-1]))
+			continue
 		}
+
+		fmt.Print(line)
 	}
 }

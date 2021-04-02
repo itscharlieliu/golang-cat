@@ -41,9 +41,9 @@ func TestCatSuppressEmptyLines(t *testing.T) {
 
 func TestCatHighlightEndOfLine(t *testing.T) {
 
-	commandOutputString := pkg.RunCmd("go", []string{"run", "../cmd/cat.go", "-E", "test.txt"})
+	commandOutputString := pkg.RunCmd("go", []string{"run", "../cmd/cat.go", "-E", "test3.txt"})
 
-	realOutputString := pkg.RunCmd("cat", []string{"-E", "test.txt"})
+	realOutputString := pkg.RunCmd("cat", []string{"-E", "test3.txt"})
 
 	if commandOutputString != realOutputString {
 		t.Errorf("Expected: \n%s\nGot \n%s\n", realOutputString, commandOutputString)
